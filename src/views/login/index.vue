@@ -3,7 +3,7 @@
     <ThemeSwitch class="theme-switch" />
     <div class="login-card">
       <div class="title">
-        <img src="@/assets/layouts/logo-text-2.png" alt="" />
+        <Logo title="Admin" :font-size="55" :is-black="true" />
       </div>
       <div class="content">
         <el-form
@@ -57,8 +57,9 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/modules/user";
 import { type FormInstance, type FormRules } from "element-plus";
-import { User, Lock } from "@element-plus/icons-vue";
+import { Lock, User } from "@element-plus/icons-vue";
 import ThemeSwitch from "@/components/ThemeSwitch/index.vue";
+import Logo from "@/components/Logo/index.vue";
 
 defineOptions({ name: "Login" });
 

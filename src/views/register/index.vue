@@ -3,7 +3,7 @@
     <ThemeSwitch class="theme-switch" />
     <div class="register-card">
       <div class="title">
-        <img src="@/assets/layouts/logo-text-2.png" alt="" />
+        <Logo title="Admin" :font-size="55" :is-black="true" />
       </div>
       <div class="content">
         <el-form
@@ -72,6 +72,7 @@ import { useUserStore } from "@/store/modules/user";
 import { ElMessage, type FormInstance, type FormRules } from "element-plus";
 import { Lock, User } from "@element-plus/icons-vue";
 import ThemeSwitch from "@/components/ThemeSwitch/index.vue";
+import Logo from "@/components/Logo/index.vue";
 
 defineOptions({ name: "Register" });
 

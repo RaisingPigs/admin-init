@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { storeToRefs } from "pinia";
 import { useSettingsStore } from "@/store/modules/settings";
-import logo from "@/assets/layouts/logo.png?url";
-import logoText1 from "@/assets/layouts/logo-text-1.png?url";
-import logoText2 from "@/assets/layouts/logo-text-2.png?url";
+import Logo from "@/components/Logo/index.vue";
 
 interface Props {
   collapse?: boolean;
@@ -27,13 +25,10 @@ const { layoutMode } = storeToRefs(settingsStore);
   >
     <transition name="layout-logo-fade">
       <router-link v-if="props.collapse" key="collapse" to="/">
-        <img :src="logo" class="layout-logo" />
+        <Logo title="Admin" :font-size="16" :is-black="false" />
       </router-link>
       <router-link v-else key="expand" to="/">
-        <img
-          :src="layoutMode !== 'left' ? logoText2 : logoText1"
-          class="layout-logo-text"
-        />
+        <Logo title="Admin" :font-size="38" :is-black="false" />
       </router-link>
     </transition>
   </div>
