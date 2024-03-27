@@ -26,7 +26,7 @@ function createService() {
   request.interceptors.request.use(
     config => {
       NProgress.start();
-      config.headers.PanAPIToken = getToken() || undefined;
+      config.headers.AppToken = getToken() || undefined;
       return config;
     },
     // 发送失败
