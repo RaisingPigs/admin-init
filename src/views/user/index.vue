@@ -109,7 +109,7 @@
           background
           :layout="paginationData.layout"
           :page-sizes="paginationData.pageSizes"
-          :total="paginationData.total"
+          :total="Number(paginationData.total)"
           :page-size="paginationData.pageSize"
           :currentPage="paginationData.currentPage"
           @size-change="handleSizeChange"

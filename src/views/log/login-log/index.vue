@@ -2,9 +2,6 @@
   <div class="app-container">
     <el-card v-loading="loading" shadow="never" class="search-wrapper">
       <el-form ref="searchFormRef" :inline="true" :model="searchData" @submit.prevent="handleSearch">
-        <el-form-item prop="name" label="姓名">
-          <el-input v-model="searchData.name" placeholder="请输入姓名" />
-        </el-form-item>
         <el-form-item prop="username" label="用户名">
           <el-input v-model="searchData.username" placeholder="请输入用户名" />
         </el-form-item>
@@ -20,18 +17,19 @@
     <el-card v-loading="loading" shadow="never">
       <div class="toolbar-wrapper">
         <div>
+          登录日志
         </div>
         <div>
           <el-tooltip content="下载">
             <el-button type="primary" :icon="Download" circle />
           </el-tooltip>
           <el-tooltip content="刷新当前页">
-            <el-button type="primary" :icon="RefreshRight" circle @click="listUserByPage" />
+            <el-button type="primary" :icon="RefreshRight" circle @click="listLoginLogByPage" />
           </el-tooltip>
         </div>
       </div>
       <div class="table-wrapper">
-        <el-table :data="userList">
+        <el-table :data="loginLogList">
           <el-table-column prop="username" label="用户名" align="center" />
           <el-table-column prop="loginType" label="登录方式" align="center" width="120" />
           <el-table-column prop="loginIp" label="登录IP地址" align="center" width="150" />
@@ -43,9 +41,14 @@
         </el-table>
       </div>
       <div class="pager-wrapper">
-        <el-pagination background :layout="paginationData.layout" :page-sizes="paginationData.pageSizes"
-          :total="paginationData.total" :page-size="paginationData.pageSize" :currentPage="paginationData.currentPage"
-          @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+        <el-pagination
+          background :layout="paginationData.layout"
+          :page-sizes="paginationData.pageSizes"
+          :total="Number(paginationData.total)"
+          :page-size="paginationData.pageSize"
+          :currentPage="paginationData.currentPage"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange" />
       </div>
     </el-card>
   </div>
@@ -54,42 +57,41 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from "vue";
 import { reqListLoginLog } from "@/api/log";
-import { ElMessage, ElMessageBox, type FormInstance } from "element-plus";
+import { type FormInstance } from "element-plus";
 import { Download, Refresh, RefreshRight, Search } from "@element-plus/icons-vue";
 import { usePagination } from "@/hooks/usePagination";
 
 defineOptions({
   // 命名当前组件
-  name: "login_log"
+  name: "LoginLog"
 });
 
 const loading = ref<boolean>(false);
 const { paginationData, handleCurrentChange, handleSizeChange } = usePagination();
 
 //#region 查
-const userList = ref<[]>([]);
+const loginLogList = ref<any[]>([]);
 const searchFormRef = ref<FormInstance | null>(null);
 const searchData = reactive({
   name: "",
   username: ""
 });
 
-const listUserByPage = async () => {
+const listLoginLogByPage = async () => {
   loading.value = true;
 
-  const userQueryReq: UserAPI.UserQueryReq = {
+  const loginLogQueryReq: any = {
     pageNum: paginationData.value.currentPage,
     pageSize: paginationData.value.pageSize,
-    // name: searchData.name || undefined,
-    // username: searchData.username || undefined
+    username: searchData.username || undefined
   };
 
   try {
-    const { data } = await reqListLoginLog(userQueryReq);
+    const { data } = await reqListLoginLog(loginLogQueryReq);
     paginationData.value.total = data.total;
-    userList.value = data.records;
+    loginLogList.value = data.records;
   } catch (err) {
-    userList.value = [];
+    loginLogList.value = [];
   } finally {
     loading.value = false;
   }
@@ -97,7 +99,7 @@ const listUserByPage = async () => {
 
 const handleSearch = () => {
   paginationData.value.currentPage === 1
-    ? listUserByPage()
+    ? listLoginLogByPage()
     : (paginationData.value.currentPage = 1);
 };
 const resetSearch = () => {
@@ -109,7 +111,7 @@ const resetSearch = () => {
 /** 监听分页参数的变化 */
 watch(
   [() => paginationData.value.currentPage, () => paginationData.value.pageSize],
-  listUserByPage,
+  listLoginLogByPage,
   { immediate: true }
 );
 </script>
