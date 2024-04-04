@@ -103,6 +103,38 @@ export const asyncRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    name: "Log",
+    path: "/log",
+    component: Layouts,
+    redirect: "/log/login-log",
+    meta: {
+      title: "日志管理",
+      elIcon: "Avatar",
+      roles: ["admin"], // 可以在根路由中设置角色
+      alwaysShow: true // 将始终显示根菜单
+    },
+    children: [
+      {
+        name: "LoginLog",
+        path: "login-log",
+        component: () => import("@/views/log/login-log/index.vue"),
+        meta: {
+          title: "登录日志",
+          keepAlive: true
+        }
+      },
+      {
+        name: "OperationLog",
+        path: "operation-log",
+        component: () => import("@/views/log/operation-log/index.vue"),
+        meta: {
+          title: "操作日志",
+          keepAlive: true
+        }
+      }
+    ]
+  },
+  {
     name: "ErrorPage",
     path: "/:pathMatch(.*)*", // Must put the 'ErrorPage' route at the end, 必须将 'ErrorPage' 路由放在最后
     redirect: "/404",

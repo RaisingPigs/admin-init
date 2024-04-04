@@ -1,13 +1,17 @@
 <template>
-  <div>
-    登录日志
-    <span>123</span>
+  <div class="app-container">
+    <el-card
+      v-loading="loading"
+      shadow="never"
+      class="search-wrapper"
+    >
+      123123212
+    </el-card>
+
   </div>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    $END$
+    操作日志
   </div>
 </template>
 
