@@ -22,9 +22,9 @@ export const useUserStore = defineStore("user", () => {
 
   /** 登录 */
   const login = async (loginForm: LoginAPI.UserLoginReq) => {
-    const res: BaseResponse<string> = await reqLogin(loginForm);
-    setToken(res.data);
-    token.value = res.data;
+    const res: BaseResponse<any> = await reqLogin(loginForm);
+    setToken(res.data.token);
+    token.value = res.data.token;
   };
 
   const register = async (registerForm: LoginAPI.UserRegisterReq) => {
