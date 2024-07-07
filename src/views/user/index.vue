@@ -316,9 +316,7 @@ const handleUpdate = (row: UserAPI.UserVO) => {
 };
 
 const getValFromOption = (options: Options[], _label: string): number => {
-  console.log(options, _label);
   const filtered = options.filter((item: Options) => item.label === _label);
-  console.log(filtered);
   return filtered[0].value;
 };
 //#endregion
