@@ -1,0 +1,73 @@
+{
+  "componentName": "Config",
+  "baseUrl": "",
+  "operation": {
+    "add": {
+      "method": "post",
+      "url": ""
+    },
+    "delete": {
+      "method": "post",
+      "url": ""
+    },
+    "update": {
+      "method": "put",
+      "url": "/user/update"
+    },
+    "list": {
+      "method": "post",
+      "url": "/user/list/page"
+    }
+  },
+  "searchColumns": [
+    "name",
+    "gender"
+  ],
+  "columns": [
+    {
+      "label": "id",
+      "name": "id",
+      "type": "number"
+    },
+    {
+      "label": "姓名",
+      "name": "name",
+      "type": "string",
+      "operation": {
+        "show": true,
+        "edit": true,
+        "add": true
+      }
+    },
+    {
+      "label": "年龄",
+      "name": "age",
+      "type": "number",
+      "operation": {
+        "show": true,
+        "edit": true,
+        "add": true
+      }
+    },
+    {
+      "label": "性别",
+      "name": "gender",
+      "type": "number",
+      "options": [
+        {
+          "label": "男",
+          "value": 0
+        },
+        {
+          "label": "女",
+          "value": 1
+        }
+      ],
+      "operation": {
+        "show": true,
+        "edit": true,
+        "add": true
+      }
+    }
+  ]
+}

@@ -99,6 +99,15 @@ export const asyncRoutes: RouteRecordRaw[] = [
           title: "用户管理",
           keepAlive: true
         }
+      },
+      {
+        name: "Config",
+        path: "config",
+        component: () => import("@/views/user-json/index.vue"),
+        meta: {
+          title: "用户配置",
+          keepAlive: true
+        }
       }
     ]
   },
