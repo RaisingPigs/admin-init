@@ -19,10 +19,6 @@
       "url": "/user/list/page"
     }
   },
-  "searchColumns": [
-    "name",
-    "gender"
-  ],
   "columns": [
     {
       "label": "id",
@@ -36,7 +32,8 @@
       "operation": {
         "show": true,
         "edit": true,
-        "add": true
+        "add": true,
+        "search": true
       }
     },
     {
@@ -66,7 +63,8 @@
       "operation": {
         "show": true,
         "edit": true,
-        "add": true
+        "add": true,
+        "search": true
       }
     }
   ]

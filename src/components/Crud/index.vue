@@ -11,9 +11,9 @@
         :model="searchData"
         @submit.prevent="handleSearch"
       >
-        <template v-for="column in searchColumns()">
+        <template v-for="column in columns">
           <el-form-item
-            v-if="currentUpdateId ? column?.operation?.edit : column?.operation?.add"
+            v-if="column?.operation?.search"
             :prop="column.name"
             :label="column.label"
           >
@@ -80,12 +80,15 @@
       <div class="table-wrapper">
         <el-table :data="userList">
           <el-table-column type="selection" width="50" align="center" />
-          <el-table-column
-            v-for="column in columns"
-            :prop="column.name"
-            :label="column.label"
-            align="center"
-          />
+          <template v-for="column in columns">
+            <el-table-column
+              v-if="column?.operation?.show"
+              :prop="column.name"
+              :label="column.label"
+              align="center"
+            />
+          </template>
+
           <el-table-column
             fixed="right"
             label="操作"
@@ -201,7 +204,7 @@
 
 <script lang="ts" setup>
 import { computed, nextTick, reactive, ref, watch } from "vue";
-import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from "element-plus";
+import { ElMessage, ElMessageBox, type FormInstance } from "element-plus";
 import { CirclePlus, Delete, Download, Refresh, RefreshRight, Search } from "@element-plus/icons-vue";
 import { usePagination } from "@/hooks/usePagination";
 import request from "@/utils/request";
@@ -217,11 +220,6 @@ const config = props.config;
 const columns = config.columns;
 const baseUrl = config.baseUrl;
 const operation = config.operation;
-
-const searchColumns = () => {
-  const columnNames = config.searchColumns;
-  return columns.filter(column => columnNames.includes(column.name));
-};
 
 const req = {
   list: async (data: any) => {
@@ -271,7 +269,7 @@ const dialogFormRef = ref<FormInstance | null>(null);
 const dialogFormData = ref({});
 
 
-const dialogFormRules: FormRules = computed(() => {
+const dialogFormRules: any = computed(() => {
   const rules = {};
 
   for (const column of columns) {
@@ -364,11 +362,12 @@ const handleUpdate = (row: UserAPI.UserVO) => {
 const userList = ref<UserAPI.UserVO[]>([]);
 const searchFormRef = ref<FormInstance | null>(null);
 const getSearchData = () => {
-  const columns = searchColumns();
   const searchObj = {};
 
   for (const column of columns) {
-    searchObj[column.name] = "";
+    if (column?.operation?.search) {
+      searchObj[column.name] = "";
+    }
   }
 
   return searchObj;
@@ -386,8 +385,6 @@ const listUserByPage = async () => {
     pageSize: paginationData.value.pageSize,
     ...searchData
   };
-
-  console.log(userQueryReq);
 
   try {
     const { data } = await req.list(userQueryReq);
